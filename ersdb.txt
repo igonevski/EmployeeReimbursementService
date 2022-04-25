@@ -5,10 +5,7 @@ ers_employee_id serial primary key,
 ers_employee_first_name varchar(15) not null,
 ers_employee_last_name varchar(15) not null,
 ers_employee_work_dept varchar(20) not null,
-ers_employee_phone_num varchar(15) not null,
 ers_employee_job_title varchar(15) not null,
-ers_employee_hire_date float not null,
-ers_employee_salary double precision not null
 );
 
 create table ers_expenses(
@@ -17,5 +14,5 @@ ers_employee_id serial foreign key references ers_employees(ers_employees_id) on
 ers_expense_amount double precision not null,
 ers_expense_date float not null,
 ers_expense_type varchar(50) not null,
-ers_expense_status varchar(20) not null
+ers_expense_status varchar(20) not null,
 );
