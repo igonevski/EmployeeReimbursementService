@@ -2013,3 +2013,18 @@ org.postgresql.util.PSQLException: ResultSet not positioned properly, perhaps yo
 [WARN ] 2022-05-01 21:52:01.100 [main] Log4J2PropertiesConfig - This is a warn message
 [ERROR] 2022-05-01 21:52:01.100 [main] Log4J2PropertiesConfig - This is an error message
 [FATAL] 2022-05-01 21:52:01.100 [main] Log4J2PropertiesConfig - This is a fatal message
+[DEBUG] 2022-05-02 18:22:32.181 [main] Log4J2PropertiesConfig - This is a debug message
+[INFO ] 2022-05-02 18:22:32.197 [main] Log4J2PropertiesConfig - This is an info message
+[WARN ] 2022-05-02 18:22:32.197 [main] Log4J2PropertiesConfig - This is a warn message
+[ERROR] 2022-05-02 18:22:32.197 [main] Log4J2PropertiesConfig - This is an error message
+[FATAL] 2022-05-02 18:22:32.197 [main] Log4J2PropertiesConfig - This is a fatal message
+[DEBUG] 2022-05-02 18:48:28.952 [main] Log4J2PropertiesConfig - This is a debug message
+[INFO ] 2022-05-02 18:48:28.968 [main] Log4J2PropertiesConfig - This is an info message
+[WARN ] 2022-05-02 18:48:28.968 [main] Log4J2PropertiesConfig - This is a warn message
+[ERROR] 2022-05-02 18:48:28.968 [main] Log4J2PropertiesConfig - This is an error message
+[FATAL] 2022-05-02 18:48:28.968 [main] Log4J2PropertiesConfig - This is a fatal message
+[DEBUG] 2022-05-02 19:56:15.771 [main] Log4J2PropertiesConfig - This is a debug message
+[INFO ] 2022-05-02 19:56:15.802 [main] Log4J2PropertiesConfig - This is an info message
+[WARN ] 2022-05-02 19:56:15.802 [main] Log4J2PropertiesConfig - This is a warn message
+[ERROR] 2022-05-02 19:56:15.802 [main] Log4J2PropertiesConfig - This is an error message
+[FATAL] 2022-05-02 19:56:15.802 [main] Log4J2PropertiesConfig - This is a fatal message

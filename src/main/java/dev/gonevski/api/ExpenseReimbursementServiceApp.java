@@ -29,6 +29,10 @@ public class ExpenseReimbursementServiceApp {
 
         Javalin app = Javalin.create();
 
+        app.get("/", context -> {
+            context.result("I am a healthy application");
+        });
+
         // Provide the routes here as follows:
 
 
@@ -271,7 +275,8 @@ public class ExpenseReimbursementServiceApp {
             }
         });
 
-        app.start(7777);
+        app.start(5000);
+        // Must be port 5000 to work on Elastic Beanstalk
 
     }
 }
