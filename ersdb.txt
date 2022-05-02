@@ -1,18 +1,27 @@
-create database ersdb;
+CREATE database reimbursementdb;
 
-create table ers_employees(
-ers_employee_id serial primary key,
-ers_employee_first_name varchar(15) not null,
-ers_employee_last_name varchar(15) not null,
-ers_employee_work_dept varchar(20) not null,
-ers_employee_job_title varchar(15) not null,
+create table ersemployees(
+ersemployeeid int generated always as identity,
+ersemployeefirstname varchar(50),
+ersemployeelastname varchar(50),
+ersemployeeworkdept varchar(30),
+ersemployeejobtitle varchar(30),
+primary key(ersemployeeid)
 );
 
-create table ers_expenses(
-ers_expense_id serial primary key,
-ers_employee_id serial foreign key references ers_employees(ers_employees_id) on delete cascade,
-ers_expense_amount double precision not null,
-ers_expense_date float not null,
-ers_expense_type varchar(50) not null,
-ers_expense_status varchar(20) not null,
+create table ersexpenses(
+ersexpenseid int generated always as identity,
+ersemployeeid int,
+ersexpenseamount double precision,
+ersexpensedate float,
+ersexpensetype varchar(30),
+ersexpensestatus varchar(30),
+primary key (ersexpenseid),
+constraint fk_ersemployees
+foreign key (ersemployeeid)
+	references ersemployees(ersemployeeid)
+	on delete cascade
 );
+
+drop table ersexpenses;
+drop table ersemployees;
