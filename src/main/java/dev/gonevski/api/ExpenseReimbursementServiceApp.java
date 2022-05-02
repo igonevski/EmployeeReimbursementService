@@ -12,7 +12,7 @@ import dev.gonevski.services.ExpenseService;
 import dev.gonevski.services.ExpenseServiceImplementation;
 import io.javalin.Javalin;
 
-// import java.sql.SQLException;
+//import java.sql.SQLException;
 import java.util.Objects;
 
 // Add list utilities here - not creating own data structures, instead using a package
@@ -34,23 +34,32 @@ public class ExpenseReimbursementServiceApp {
 
         // EMPLOYEE ROUTES
 
-        app.post("/employee", context -> {
+        app.post("/employees", context -> {
             String body = context.body();
             Employee employee = gson.fromJson(body, Employee.class);
-            Employee postedEmployee = employeeService.POSTEmployee(employee);
-            context.status(201);
-            String employeeJson = gson.toJson(postedEmployee);
-            context.result(employeeJson);
+            List<Employee> employeeList = employeeService.GETEmployeeList();
+            // performed stream matching to the employee ID to ensure that there are no duplicate employee ID's in ERS
+            boolean isEmployee = employeeList.stream().anyMatch(o -> o.getFirstName() == employee.getFirstName() && o.getLastName() == employee.getLastName());
+            if (isEmployee) {
+                context.status(400);
+                context.result("Employee with that ID already exists in the database");
+            }
+            else {
+                Employee postedEmployee = employeeService.POSTEmployee(employee);
+                context.status(201);
+                String employeeJson = gson.toJson(postedEmployee);
+                context.result(employeeJson);
+            }
         });
 
-        app.get("/employee", context -> {
+        app.get("/employees", context -> {
             List<Employee> employeeList = employeeService.GETEmployeeList();
             String employeeListJSON = gson.toJson(employeeList);
             context.status(200);
             context.result(employeeListJSON);
         });
 
-        app.get("/employee/{employeeId}", context -> {
+        app.get("/employees/{employeeId}", context -> {
             int employeeId = Integer.parseInt(context.pathParam("employeeId"));
             try {
                 String employeeJSON = gson.toJson(employeeService.GETEmployeeById(employeeId));
@@ -59,11 +68,11 @@ public class ExpenseReimbursementServiceApp {
             }
             catch(ResourceNotFound e){
                 context.status(404);
-                context.result("No employee was found with that ID.");
+                context.result("No employee was found with ID: "+ employeeId);
             }
         });
 
-        app.put("/employee/{employeeId}", context -> {
+        app.put("/employees/{employeeId}", context -> {
             int employeeId = Integer.parseInt(context.pathParam("employeeId"));
             String body = context.body();
             Employee employee = gson.fromJson(body,Employee.class);
@@ -73,25 +82,32 @@ public class ExpenseReimbursementServiceApp {
             context.result("The Employee field has been updated.");
         });
 
-        app.delete("/employee/{employeeId}", context -> {
+        app.delete("/employees/{employeeId}", context -> {
             int employeeId = Integer.parseInt(context.pathParam("employeeId"));
-            List<Expense> expenseList = expenseService.GETExpenseList();
+            try {
+                List<Expense> expenseList = expenseService.GETExpenseList();
 
-            // A good idea for this is to change the logic here - maybe us a while loop instead? *CHANGE#1 IS A MUST!!!
-            // Because I don't really understand this segment of the code...
-            boolean removeEmployee = expenseList.stream().anyMatch(o -> o.getEmployeeId() == employeeId);
-            if (removeEmployee) {
-                context.result("Employees with recorded expenses cannot be removed from the database.");
-            }
-            else {
-                boolean result = employeeService.DELETEEmployeeById(employeeId);
-                if (result) {
-                    context.status(200);
-                    context.result("Employee field with the provided ID has been deleted from the database.");
-                } else {
-                    context.status(404);
-                    context.result("No employee with that ID exists in the database.");
+                // performed stream matching to the employee iD because there is a constraint to not remove employees with expenses!
+                boolean removeEmployee = expenseList.stream().anyMatch(o -> o.getEmployeeId() == employeeId);
+                if (removeEmployee) {
+                    context.status(400);
+                    context.result("Employees with recorded expenses cannot be removed from the database.");
                 }
+                else {
+                    boolean result = employeeService.DELETEEmployeeById(employeeId);
+                    if (result) {
+                        context.status(200);
+                        context.result("Employee field with the provided ID has been deleted from the database.");
+                    }
+                    else {
+                        context.status(404);
+                        context.result("Employee with the provided ID: " + employeeId + " has not been found.");
+                    }
+                }
+            }
+            catch(ResourceNotFound e){
+                context.status(500);
+                context.result(e.getMessage());
             }
         });
 
@@ -101,7 +117,7 @@ public class ExpenseReimbursementServiceApp {
         app.post("/expenses", context -> {
             String body = context.body();
             Expense expense = gson.fromJson(body,Expense.class);
-            expense.setExpenseStatus("Pending");
+            //expense.setExpenseStatus("Pending");
             Expense newExpense = expenseService.POSTExpense(expense);
             context.status(201);
             String expenseRecordJSON = gson.toJson(newExpense);
@@ -135,7 +151,7 @@ public class ExpenseReimbursementServiceApp {
             }
             catch(ResourceNotFound e){
                 context.status(404);
-                context.result("Expense ID has not been found in the database.");
+                context.result("Expense ID: " + expenseId + " has not been found in the database.");
             }
         });
 
@@ -151,7 +167,8 @@ public class ExpenseReimbursementServiceApp {
                     context.result("The Expense field has been updated.");
                 }
                 else{
-                    context.result("Expense fields that that have confirmed statuses cannot be deleted.");
+                    context.status(400);
+                    context.result("Expense fields that that have confirmed statuses cannot be changed.");
                 }}
             catch(ResourceNotFound e){
                 context.status(404);
@@ -169,6 +186,7 @@ public class ExpenseReimbursementServiceApp {
                     context.status(200);
                 }
                 else {
+                    context.status(400);
                     context.result("Expense fields that have confirmed statuses cannot be updated.");
                 }
             }
@@ -187,7 +205,8 @@ public class ExpenseReimbursementServiceApp {
                     context.status(200);
                     context.result("Expense has been updated to the denied status.");
                 }
-                else{
+                else {
+                    context.status(400);
                     context.result("Expense fields that have confirmed statuses cannot be updated.");
                 }
             }
@@ -207,17 +226,19 @@ public class ExpenseReimbursementServiceApp {
                     context.status(200);
                     context.result("Expense deleted");
                 }
-                else context.status(400);
-                context.result("Expense fields that have confirmed statuses cannot be deleted.");
+                else {
+                    context.status(400);
+                    context.result("Expense fields that have confirmed statuses cannot be deleted.");
+                }
             }
             catch(ResourceNotFound e){
+                context.status(500);
                 context.result(e.getMessage());
-                context.status(404);
             }
         });
 
 
-        app.get("/employee/{employeeId}/expenses",context -> {
+        app.get("/employees/{employeeId}/expenses",context -> {
             try{
                 int employeeId = Integer.parseInt(context.pathParam("employeeId"));
                 String employeeJSON = gson.toJson(employeeService.GETEmployeeById(employeeId));
@@ -230,7 +251,7 @@ public class ExpenseReimbursementServiceApp {
             }
         });
 
-        app.post("/employee/{employeeId}/expenses", context -> {
+        app.post("/employees/{employeeId}/expenses", context -> {
             int employeeId = Integer.parseInt(context.pathParam("employeeId"));
             String body = context.body();
             Expense newExpense = gson.fromJson(body, Expense.class);
