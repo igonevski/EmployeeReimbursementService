@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ExpenseDAOImplementation implements ExpenseDAO {
 
-    private Logger logger = LogManager.getLogger(EmployeeDAOImplementation.class.getName());
+    private Logger logger = LogManager.getLogger(ExpenseDAOImplementation.class.getName());
 
     @Override
     public Expense addExpense(Expense addedExpense) {

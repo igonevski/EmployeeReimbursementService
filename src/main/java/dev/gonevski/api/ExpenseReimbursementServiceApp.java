@@ -29,9 +29,7 @@ public class ExpenseReimbursementServiceApp {
 
         Javalin app = Javalin.create();
 
-        app.get("/", context -> {
-            context.result("I am a healthy application");
-        });
+        app.get("/", context -> context.result("I am a healthy application"));
 
         // Provide the routes here as follows:
 
@@ -43,7 +41,7 @@ public class ExpenseReimbursementServiceApp {
             Employee employee = gson.fromJson(body, Employee.class);
             List<Employee> employeeList = employeeService.GETEmployeeList();
             // performed stream matching to the employee ID to ensure that there are no duplicate employee ID's in ERS
-            boolean isEmployee = employeeList.stream().anyMatch(o -> o.getFirstName() == employee.getFirstName() && o.getLastName() == employee.getLastName());
+            boolean isEmployee = employeeList.stream().anyMatch(o -> o.getFirstName().equals(employee.getFirstName()) && o.getLastName().equals(employee.getLastName()));
             if (isEmployee) {
                 context.status(400);
                 context.result("Employee with that ID already exists in the database");
@@ -172,7 +170,7 @@ public class ExpenseReimbursementServiceApp {
                 }
                 else{
                     context.status(400);
-                    context.result("Expense fields that that have confirmed statuses cannot be changed.");
+                    context.result("Expense fields that have confirmed statuses cannot be changed.");
                 }}
             catch(ResourceNotFound e){
                 context.status(404);
@@ -245,10 +243,18 @@ public class ExpenseReimbursementServiceApp {
         app.get("/employees/{employeeId}/expenses",context -> {
             try{
                 int employeeId = Integer.parseInt(context.pathParam("employeeId"));
+                List<Expense> expenseList = expenseService.GETExpenseList();
+                List<Expense> matchingIDList = new ArrayList<>();
+                for(Expense expense : expenseList) {
+                    if (expense.getEmployeeId() == (employeeId)) {
+                        matchingIDList.add(expense);
+                    }
+                }
+                String expenseListJSON = gson.toJson(matchingIDList);
                 String employeeJSON = gson.toJson(employeeService.GETEmployeeById(employeeId));
-                String expensesJSON = gson.toJson(expenseService.GETExpenseByEmployee(employeeId));
+                // String expensesJSON = gson.toJson(expenseService.GETExpenseByEmployee(employeeId));
                 context.status(200);
-                context.result("The following employee and expense fields have been retrieved: " + expensesJSON + employeeJSON);
+                context.result("The following employee and expense fields have been retrieved: " + employeeJSON + expenseListJSON);
             }
             catch(ResourceNotFound e){
                 context.status(404);

@@ -2028,3 +2028,61 @@ org.postgresql.util.PSQLException: ResultSet not positioned properly, perhaps yo
 [WARN ] 2022-05-02 19:56:15.802 [main] Log4J2PropertiesConfig - This is a warn message
 [ERROR] 2022-05-02 19:56:15.802 [main] Log4J2PropertiesConfig - This is an error message
 [FATAL] 2022-05-02 19:56:15.802 [main] Log4J2PropertiesConfig - This is a fatal message
+[DEBUG] 2022-05-03 23:16:42.854 [main] Log4J2PropertiesConfig - This is a debug message
+[INFO ] 2022-05-03 23:16:42.902 [main] Log4J2PropertiesConfig - This is an info message
+[WARN ] 2022-05-03 23:16:42.902 [main] Log4J2PropertiesConfig - This is a warn message
+[ERROR] 2022-05-03 23:16:42.902 [main] Log4J2PropertiesConfig - This is an error message
+[FATAL] 2022-05-03 23:16:42.902 [main] Log4J2PropertiesConfig - This is a fatal message
+[ERROR] 2022-05-03 23:24:04.459 [JettyServerThreadPool-27] EmployeeDAOImplementation - unable to retrieve Expense by ID
+org.postgresql.util.PSQLException: ResultSet not positioned properly, perhaps you need to call next.
+	at org.postgresql.jdbc.PgResultSet.getRawValue(PgResultSet.java:3092) ~[postgresql-42.3.3.jar:42.3.3]
+	at org.postgresql.jdbc.PgResultSet.getInt(PgResultSet.java:2330) ~[postgresql-42.3.3.jar:42.3.3]
+	at org.postgresql.jdbc.PgResultSet.getInt(PgResultSet.java:2779) ~[postgresql-42.3.3.jar:42.3.3]
+	at dev.gonevski.data.ExpenseDAOImplementation.getExpenseById(ExpenseDAOImplementation.java:62) ~[classes/:?]
+	at dev.gonevski.services.ExpenseServiceImplementation.GETExpenseById(ExpenseServiceImplementation.java:34) ~[classes/:?]
+	at dev.gonevski.api.ExpenseReimbursementServiceApp.lambda$main$10(ExpenseReimbursementServiceApp.java:153) ~[classes/:?]
+	at io.javalin.core.security.SecurityUtil.noopAccessManager(SecurityUtil.kt:20) ~[javalin-4.4.0.jar:4.4.0]
+	at io.javalin.http.JavalinServlet.addHandler$lambda-5(JavalinServlet.kt:115) ~[javalin-4.4.0.jar:4.4.0]
+	at io.javalin.http.JavalinServlet$service$tryBeforeAndEndpointHandlers$1.invoke(JavalinServlet.kt:44) ~[javalin-4.4.0.jar:4.4.0]
+	at io.javalin.http.JavalinServlet$service$tryBeforeAndEndpointHandlers$1.invoke(JavalinServlet.kt:39) ~[javalin-4.4.0.jar:4.4.0]
+	at io.javalin.http.JavalinServlet.service$tryWithExceptionMapper(JavalinServlet.kt:131) ~[javalin-4.4.0.jar:4.4.0]
+	at io.javalin.http.JavalinServlet.service$tryBeforeAndEndpointHandlers(JavalinServlet.kt:39) ~[javalin-4.4.0.jar:4.4.0]
+	at io.javalin.http.JavalinServlet.service(JavalinServlet.kt:87) ~[javalin-4.4.0.jar:4.4.0]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790) ~[javax.servlet-api-3.1.0.jar:3.1.0]
+	at io.javalin.jetty.JavalinJettyServlet.service(JavalinJettyServlet.kt:58) ~[javalin-4.4.0.jar:4.4.0]
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:790) ~[javax.servlet-api-3.1.0.jar:3.1.0]
+	at org.eclipse.jetty.servlet.ServletHolder.handle(ServletHolder.java:799) ~[jetty-servlet-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.servlet.ServletHandler.doHandle(ServletHandler.java:550) ~[jetty-servlet-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:233) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.session.SessionHandler.doHandle(SessionHandler.java:1624) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextHandle(ScopedHandler.java:233) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at io.javalin.jetty.JettyServer$start$wsAndHttpHandler$1.doHandle(JettyServer.kt:52) ~[javalin-4.4.0.jar:4.4.0]
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:188) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.servlet.ServletHandler.doScope(ServletHandler.java:501) ~[jetty-servlet-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1594) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.handler.ScopedHandler.nextScope(ScopedHandler.java:186) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.handler.ContextHandler.doScope(ContextHandler.java:1355) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.handler.StatisticsHandler.handle(StatisticsHandler.java:179) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:127) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.Server.handle(Server.java:516) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.HttpChannel.lambda$handle$1(HttpChannel.java:487) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.HttpChannel.dispatch(HttpChannel.java:732) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:479) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:277) ~[jetty-server-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:311) ~[jetty-io-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:105) ~[jetty-io-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.io.ChannelEndPoint$1.run(ChannelEndPoint.java:104) ~[jetty-io-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.runTask(EatWhatYouKill.java:338) ~[jetty-util-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:315) ~[jetty-util-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.tryProduce(EatWhatYouKill.java:173) ~[jetty-util-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:131) ~[jetty-util-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:409) ~[jetty-util-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:883) ~[jetty-util-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$Runner.run(QueuedThreadPool.java:1034) ~[jetty-util-9.4.45.v20220203.jar:9.4.45.v20220203]
+	at java.lang.Thread.run(Thread.java:750) ~[?:1.8.0_322]
+[DEBUG] 2022-05-04 08:43:37.493 [main] Log4J2PropertiesConfig - This is a debug message
+[INFO ] 2022-05-04 08:43:37.524 [main] Log4J2PropertiesConfig - This is an info message
+[WARN ] 2022-05-04 08:43:37.524 [main] Log4J2PropertiesConfig - This is a warn message
+[ERROR] 2022-05-04 08:43:37.524 [main] Log4J2PropertiesConfig - This is an error message
+[FATAL] 2022-05-04 08:43:37.524 [main] Log4J2PropertiesConfig - This is a fatal message
