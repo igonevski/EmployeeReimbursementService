@@ -19,9 +19,16 @@ The Employee Reimbursement System (ERS) is REST API that helps manage the proces
 4. Negative expenses are not allowed
 5. HTTP Requests to create, read, update, and delete employee and reimbursement entries
 
-## To-do list:
+## To-do list
 1. Create an object relational mapper (ORM) to save entities to read an entity class and abstract away needing to write individualized DAO methods per entity object.
 2. Inlcude improved frontend webpage design with JavaScript and React.js
 
 ## Getting Started
 git clone https://github.com/igonevski/EmployeeReimbursementService.git
+
+## Instructions
+1. Clone repository
+2. Make sure you have IntelliJ installed
+3. Run Main app on provided port number
+4. Test in Postman (Install Postman) to observe mock server and confirm functionality
+5. Run URL/URI HTTP requests on localhost:port_number/URI
