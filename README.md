@@ -24,4 +24,4 @@ The Employee Reimbursement System (ERS) is REST API that helps manage the proces
 2. Inlcude improved frontend webpage design with JavaScript and React.js
 
 ## Getting Started
-git clone 
+git clone https://github.com/igonevski/EmployeeReimbursementService.git
